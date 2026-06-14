@@ -28,6 +28,11 @@ struct TelegramUpdate {
     std::vector<TelegramEntity> entities;
 };
 
+struct SendResult {
+    bool ok = false;
+    std::string error_description;
+};
+
 class TelegramClient {
 public:
     TelegramClient(const std::string& token);
@@ -37,10 +42,10 @@ public:
     std::vector<TelegramUpdate> getUpdates(int64_t offset, int timeout_seconds = 30);
 
     // Send text message (MarkdownV2 or HTML)
-    bool sendMessage(int64_t chat_id, const std::string& text, const std::string& parse_mode = "");
+    SendResult sendMessage(int64_t chat_id, const std::string& text, const std::string& parse_mode = "");
 
     // Send Rich Message
-    bool sendRichMessage(int64_t chat_id, const nlohmann::json& rich_message);
+    SendResult sendRichMessage(int64_t chat_id, const nlohmann::json& rich_message);
 
 private:
     nlohmann::json postRequest(const std::string& method, const nlohmann::json& payload);

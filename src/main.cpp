@@ -2,6 +2,7 @@
 #include "message_accumulator.h"
 #include "telegram_client.h"
 #include "logger.h"
+#include "markdown_parser.h"
 #include <algorithm>
 #include <chrono>
 #include <iostream>
@@ -24,6 +25,8 @@ std::string replace_nbsps(const std::string& str) {
     return result;
 }
 
+
+
 // Balance unclosed formatting tags to prevent RICH_MESSAGE_MARKDOWN_INVALID
 std::string balance_markdown(const std::string& text) {
     std::string balanced = text;
@@ -35,9 +38,25 @@ std::string balance_markdown(const std::string& text) {
             if (!open_tags.empty() && open_tags.back() == "```") {
                 open_tags.pop_back();
             } else {
+                if (!open_tags.empty() && open_tags.back() == "`") {
+                    open_tags.pop_back();
+                }
                 open_tags.push_back("```");
             }
             i += 3;
+        } else if (!open_tags.empty() && open_tags.back() == "```") {
+            // Inside code block: ignore all other formatting delimiters, just look for the closing ```
+            i++;
+        } else if (text[i] == '`') {
+            if (!open_tags.empty() && open_tags.back() == "`") {
+                open_tags.pop_back();
+            } else {
+                open_tags.push_back("`");
+            }
+            i++;
+        } else if (!open_tags.empty() && open_tags.back() == "`") {
+            // Inside inline code: ignore all other formatting delimiters, just look for the closing `
+            i++;
         } else if (text.compare(i, 2, "**") == 0) {
             if (!open_tags.empty() && open_tags.back() == "**") {
                 open_tags.pop_back();
@@ -59,18 +78,18 @@ std::string balance_markdown(const std::string& text) {
                 open_tags.push_back("~~");
             }
             i += 2;
-        } else if (text[i] == '`') {
-            if (!open_tags.empty() && open_tags.back() == "`") {
-                open_tags.pop_back();
-            } else {
-                open_tags.push_back("`");
-            }
-            i++;
         } else if (text[i] == '_') {
             if (!open_tags.empty() && open_tags.back() == "_") {
                 open_tags.pop_back();
             } else {
                 open_tags.push_back("_");
+            }
+            i++;
+        } else if (text[i] == '*') {
+            if (!open_tags.empty() && open_tags.back() == "*") {
+                open_tags.pop_back();
+            } else {
+                open_tags.push_back("*");
             }
             i++;
         } else {
@@ -117,11 +136,45 @@ int main() {
                 {"markdown", sanitized}
             };
             
-            bool success = client.sendRichMessage(chat_id, rich_message);
-            if (success) {
+            SendResult res = client.sendRichMessage(chat_id, rich_message);
+            if (res.ok) {
                 log_msg(LogLevel::INFO, "[Accumulator]", "Rich Message sent successfully.");
             } else {
-                log_msg(LogLevel::ERROR, "[Accumulator]", "Failed to send Rich Message.");
+                log_msg(LogLevel::WARNING, "[Accumulator]", std::format("Failed to send Rich Message: {}", res.error_description));
+                
+                // Notify user in chat about the specific error
+                std::string error_msg;
+                if (res.error_description.find("RICH_MESSAGE_PHOTO_NO_MEDIA_FOUND") != std::string::npos) {
+                    error_msg = "⚠️ Телеграм не смог скачать картинку по ссылке.";
+                } else {
+                    error_msg = std::format("⚠️ Ошибка отправки Rich Message: {}", res.error_description);
+                }
+                client.sendMessage(chat_id, error_msg);
+
+                log_msg(LogLevel::WARNING, "[Accumulator]", "Trying fallback to standard MarkdownV2...");
+                
+                // Compile standard, safely-escaped MarkdownV2 text via AST parser
+                auto blocks = MarkdownParser::parse(sanitized);
+                std::string fallback_text;
+                for (const auto& block : blocks) {
+                    fallback_text += block->toMarkdownV2();
+                }
+                
+                SendResult fallback_res = client.sendMessage(chat_id, fallback_text, "MarkdownV2");
+                if (fallback_res.ok) {
+                    log_msg(LogLevel::INFO, "[Accumulator]", "Fallback message (MarkdownV2) sent successfully.");
+                } else {
+                    log_msg(LogLevel::WARNING, "[Accumulator]", std::format("Fallback message failed: {}. Trying ultimate plain-text fallback...", fallback_res.error_description));
+                    client.sendMessage(chat_id, std::format("⚠️ Ошибка отправки MarkdownV2 fallback: {}", fallback_res.error_description));
+                    
+                    SendResult plain_res = client.sendMessage(chat_id, sanitized, "");
+                    if (plain_res.ok) {
+                        log_msg(LogLevel::INFO, "[Accumulator]", "Plain-text fallback message sent successfully.");
+                    } else {
+                        log_msg(LogLevel::ERROR, "[Accumulator]", std::format("All fallback attempts failed to deliver the message. Plain text error: {}", plain_res.error_description));
+                        client.sendMessage(chat_id, std::format("⚠️ Ошибка отправки Plain text: {}", plain_res.error_description));
+                    }
+                }
             }
         }
     );

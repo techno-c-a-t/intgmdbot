@@ -101,7 +101,7 @@ std::string reconstruct_markdown(const std::string& text, const std::vector<Tele
         } else if (ent.type == "code") {
             open_tag = "`"; close_tag = "`"; priority = 5;
         } else if (ent.type == "pre") {
-            open_tag = "```"; close_tag = "```"; priority = 6;
+            open_tag = "\n```\n"; close_tag = "\n```\n"; priority = 6;
         } else if (ent.type == "text_link") {
             open_tag = "[";
             close_tag = "](" + ent.url + ")";
@@ -259,25 +259,43 @@ std::vector<TelegramUpdate> TelegramClient::getUpdates(int64_t offset, int timeo
     return updates;
 }
 
-bool TelegramClient::sendMessage(int64_t chat_id, const std::string& text, const std::string& parse_mode) {
+SendResult TelegramClient::sendMessage(int64_t chat_id, const std::string& text, const std::string& parse_mode) {
     nlohmann::json payload = {
         {"chat_id", chat_id},
-        {"text", text}
+        {"text", text},
+        {"link_preview_options", {
+            {"prefer_large_media", true}
+        }}
     };
     if (!parse_mode.empty()) {
         payload["parse_mode"] = parse_mode;
     }
 
     nlohmann::json response = postRequest("sendMessage", payload);
-    return response.contains("ok") && response["ok"].get<bool>();
+    SendResult result;
+    if (response.contains("ok") && response["ok"].get<bool>()) {
+        result.ok = true;
+    } else if (response.contains("description")) {
+        result.error_description = response["description"].get<std::string>();
+    }
+    return result;
 }
 
-bool TelegramClient::sendRichMessage(int64_t chat_id, const nlohmann::json& rich_message) {
+SendResult TelegramClient::sendRichMessage(int64_t chat_id, const nlohmann::json& rich_message) {
     nlohmann::json payload = {
         {"chat_id", chat_id},
-        {"rich_message", rich_message}
+        {"rich_message", rich_message},
+        {"link_preview_options", {
+            {"prefer_large_media", true}
+        }}
     };
 
     nlohmann::json response = postRequest("sendRichMessage", payload);
-    return response.contains("ok") && response["ok"].get<bool>();
+    SendResult result;
+    if (response.contains("ok") && response["ok"].get<bool>()) {
+        result.ok = true;
+    } else if (response.contains("description")) {
+        result.error_description = response["description"].get<std::string>();
+    }
+    return result;
 }
