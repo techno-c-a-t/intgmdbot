@@ -1,0 +1,4 @@
+{
+  "accumulation_timeout_ms": 3000,
+  "default_parse_mode": "MarkdownV2"
+}

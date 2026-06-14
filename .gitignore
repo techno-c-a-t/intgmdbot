@@ -1,0 +1,24 @@
+# Secrets and Configs
+secrets.json
+.env
+secret_token.txt
+
+# CMake build directories
+build/
+CMakeFiles/
+CMakeCache.txt
+CMakeCompilerId*
+Makefile
+cmake_install.cmake
+
+# IDE and System files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.user
+
+# Logs
+*.log
+*.log.old
+
