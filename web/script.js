@@ -6,13 +6,14 @@
 
 const i18n = {
     ru: {
-        docTitle: "intgmdbot — C++20 Telegram GFM Engine",
+        docTitle: "mdintgbot — Telegram Markdown",
         navFeatures: "Возможности",
         navArchitecture: "Архитектура",
         navAuthor: "Об авторе",
-        heroBadge: "High-Performance · C++20 · Bot API 10.1",
-        heroTitle: "intgmdbot — GFM Telegram Engine",
-        heroSubtitle: "Высокопроизводительный телеграм-бот на C++20 с поддержкой Telegram Bot API 10.1 Rich Messages, балансировкой GFM тегов, аккумулятором личных сообщений и 3-уровневой системой фолбеков.",
+        heroBadge: "C++20 бот для конвертации md в сообщения",
+        heroTitle: "mdintgbot — Telegram Markdown Bot",
+        heroSubtitle: "Телеграм бот для конвертации текста в формате markdown в красивые сообщения телеграмм. Написан на C++20, использует API 10.1 RichMessages. Доступен в Telegram как @mdintgbot.",
+        btnTelegram: "Запустить @mdintgbot",
         btnGitHub: "Исходный код на GitHub",
         btnDocs: "Документация C++",
         
@@ -32,7 +33,7 @@ const i18n = {
 
         // Features Section
         featuresTag: "Возможности",
-        featuresTitle: "Почему intgmdbot?",
+        featuresTitle: "Почему mdintgbot?",
         fTitle1: "Bot API 10.1 Rich Messages",
         fDesc1: "Прямая отправка нативного GFM-размеченного текста без ограничений устаревшего формата MarkdownV2.",
         fTitle2: "Авто-балансировка тегов",
@@ -60,20 +61,21 @@ const i18n = {
 
         // Author Section
         authorTag: "Создатель",
-        authorTitle: "Об авторе проекта",
-        authorName: "Nikitos (@techno_c_a_t)",
-        authorBio: "Студент ПМИ, создатель intgmdbot, NSLDAI, SwipeBeat и других решений на C++, Python, Linux и IoT.",
-        authorBtn: "Перейти в Портфолио"
+        authorTitle: "Об авторе",
+        authorName: "Nikitos",
+        authorBio: "Разработчик проекта mdintgbot. Любитель IT и DIY.",
+        authorBtn: "Об авторе ↗"
     },
 
     be: {
-        docTitle: "intgmdbot — C++20 Telegram GFM Engine",
+        docTitle: "mdintgbot — Telegram Markdown",
         navFeatures: "Магчымасці",
         navArchitecture: "Архітэктура",
         navAuthor: "Пра аўтара",
-        heroBadge: "High-Performance · C++20 · Bot API 10.1",
-        heroTitle: "intgmdbot — GFM Telegram Engine",
-        heroSubtitle: "Высакапрадукцыйны тэлеграм-бот на C++20 з падтрымкай Telegram Bot API 10.1 Rich Messages, балансіроўкай GFM тэгаў, акумулятарам асабістых паведамленняў і 3-узроўневай сістэмай фолбекаў.",
+        heroBadge: "C++20 бот для канвертацыі md у паведамленні",
+        heroTitle: "mdintgbot — Telegram Markdown Bot",
+        heroSubtitle: "Тэлеграм бот для канвертацыі тэксту ў фармаце markdown у прыгожыя паведамленні тэлеграм. Напісаны на C++20, выкарыстоўвае API 10.1 RichMessages. Даступны ў Telegram як @mdintgbot.",
+        btnTelegram: "Запусціць @mdintgbot",
         btnGitHub: "Выходны код на GitHub",
         btnDocs: "Дакументацыя C++",
         
@@ -85,13 +87,13 @@ const i18n = {
         demoRichDesc: "Фармаванне натыўнага JSON-пейлоада <code>{\"markdown\": sanitized}</code> з поўнай падтрымкай табліц, спісаў і кодавых блокаў GFM.",
         demoBalanceDesc: "Функцыя <code>balance_markdown()</code> аўтаматычна зачыняе незавершаныя тэгі <code>```</code>, <code>`</code>, <code>**</code> і <code>~~</code>.",
         demoAccumulatorDesc: "Модуль <code>MessageAccumulator</code> збірае некалькі хутка адпраўленых паведамленняў у адно ў межах таймаўту.",
-        demoFallbackDesc: "Калі Rich Message адхіляецца серверам Telegram, рухавік паслядоўна выконвае фолбек на парсер <code>MarkdownV2 AST</code>.",
+        demoFallbackDesc: "Калі Rich Message адхіляецца сервером Telegram, рухавік паслядоўна выконвае фолбек на парсер <code>MarkdownV2 AST</code>.",
 
         demoStatus: "Статус: актыўны 🟢",
         demoSpeed: "Затрымка: < 1 мс",
 
         featuresTag: "Магчымасці",
-        featuresTitle: "Чаму intgmdbot?",
+        featuresTitle: "Чаму mdintgbot?",
         fTitle1: "Bot API 10.1 Rich Messages",
         fDesc1: "Прамая адпраўка натыўнага GFM-размечанага тэксту без абмежаванняў састарэлага фармату MarkdownV2.",
         fTitle2: "Аўта-балансіроўка тэгаў",
@@ -114,23 +116,24 @@ const i18n = {
         archP3Title: "Ратуемае лагіраванне",
         archP3Desc: "Модуль logger.cpp вядзе запіс падзей з узроўнямі INFO, WARNING, ERROR і CRITICAL у файл bot.log.",
         archP4Title: "Канфігуруемы JSON",
-        archP4Desc: "Гнуткая настройка праз config.json: таймаўты акумуляцыі, токены і рэжымы парсінгу.",
+        archP4Desc: "Гнуткая настройка праз config.json: таймауты акумуляцыі, токены і рэжымы парсінгу.",
 
         authorTag: "Стваральнік",
-        authorTitle: "Пра аўтара праекта",
-        authorName: "Nikitos (@techno_c_a_t)",
-        authorBio: "Студэнт ПМІ, стваральнік intgmdbot, NSLDAI, SwipeBeat і іншых рашэнняў на C++, Python, Linux і IoT.",
-        authorBtn: "Перайсці ў Партфоліо"
+        authorTitle: "Пра аўтара",
+        authorName: "Nikitos",
+        authorBio: "Распрацоўшчык праекта mdintgbot. Аматар IT і DIY.",
+        authorBtn: "Пра аўтара ↗"
     },
 
     en: {
-        docTitle: "intgmdbot — C++20 Telegram GFM Engine",
+        docTitle: "mdintgbot — Telegram Markdown",
         navFeatures: "Features",
         navArchitecture: "Architecture",
         navAuthor: "Author",
-        heroBadge: "High-Performance · C++20 · Bot API 10.1",
-        heroTitle: "intgmdbot — GFM Telegram Engine",
-        heroSubtitle: "High-performance C++20 Telegram Bot with native Telegram Bot API 10.1 Rich Messages, auto GFM tag balancing, DM message accumulator, and 3-tier fallback engine.",
+        heroBadge: "C++20 Bot to convert md into messages",
+        heroTitle: "mdintgbot — Telegram Markdown Bot",
+        heroSubtitle: "Telegram bot for converting markdown text into beautiful Telegram messages. Written in C++20, powered by API 10.1 RichMessages. Available on Telegram as @mdintgbot.",
+        btnTelegram: "Launch @mdintgbot",
         btnGitHub: "GitHub Source Code",
         btnDocs: "C++ Documentation",
         
@@ -148,7 +151,7 @@ const i18n = {
         demoSpeed: "Latency: < 1 ms",
 
         featuresTag: "Features",
-        featuresTitle: "Why intgmdbot?",
+        featuresTitle: "Why mdintgbot?",
         fTitle1: "Bot API 10.1 Rich Messages",
         fDesc1: "Native GFM markup delivery without the syntax restrictions of legacy MarkdownV2.",
         fTitle2: "Auto Tag Balancing",
@@ -174,10 +177,10 @@ const i18n = {
         archP4Desc: "Dynamic configuration via config.json: adjust accumulation timeouts, bot tokens, and parse modes without recompiling.",
 
         authorTag: "Creator",
-        authorTitle: "About the Author",
-        authorName: "Nikitos (@techno_c_a_t)",
-        authorBio: "Applied Math & CS student, creator of intgmdbot, NSLDAI, SwipeBeat, specializing in C++, Python, Linux, and IoT.",
-        authorBtn: "View Portfolio"
+        authorTitle: "About Author",
+        authorName: "Nikitos",
+        authorBio: "Developer of the intgmdbot project. IT & DIY enthusiast.",
+        authorBtn: "About Author ↗"
     }
 };
 

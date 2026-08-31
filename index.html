@@ -32,7 +32,7 @@
                 <div class="app-icon-box">
                     <i class="fas fa-terminal"></i>
                 </div>
-                <span>intg<span class="accent-text">mdbot</span></span>
+                <span>mdintg<span class="accent-text">bot</span></span>
             </a>
 
             <div class="nav-right">
@@ -78,103 +78,203 @@
             <div class="hero-content">
                 <div class="badge">
                     <span class="badge-dot"></span>
-                    <span data-i18n="heroBadge">High-Performance · C++20 · Bot API 10.1</span>
+                    <span data-i18n="heroBadge">C++20 бот для канвертацыі md у паведамленні</span>
                 </div>
                 <h1 class="hero-title" data-i18n="heroTitle">
-                    intgmdbot — GFM Telegram Engine
+                    mdintgbot — Telegram Markdown Bot
                 </h1>
                 <p class="hero-subtitle" data-i18n="heroSubtitle">
-                    Высокопроизводительный телеграм-бот на C++20 с поддержкой Telegram Bot API 10.1 Rich Messages, балансировкой GFM тегов, аккумулятором личных сообщений и 3-уровневой системой фолбеков.
+                    Тэлеграм бот для канвертацыі тэксту ў фармаце markdown у прыгожыя паведамленні тэлеграм. Напісаны на C++20, выкарыстоўвае API 10.1 RichMessages. Даступны ў Telegram як @mdintgbot.
                 </p>
                 <div class="hero-actions">
-                    <a href="https://github.com/techno-c-a-t/intgmdbot" target="_blank" class="btn btn-primary">
-                        <i class="fab fa-github"></i>
-                        <span data-i18n="btnGitHub">Исходный код на GitHub</span>
+                    <a href="https://t.me/mdintgbot" target="_blank" rel="noopener" class="btn btn-telegram" style="background: #24a1de; color: #ffffff;">
+                        <i class="fab fa-telegram-plane"></i>
+                        <span data-i18n="btnTelegram">Запусціць @mdintgbot</span>
                     </a>
-                    <a href="#architecture" class="btn btn-secondary">
-                        <i class="fas fa-code"></i>
-                        <span data-i18n="btnDocs">Архитектура C++</span>
+                    <a href="https://github.com/techno-c-a-t/intgmdbot" target="_blank" rel="noopener" class="btn btn-primary">
+                        <i class="fab fa-github"></i>
+                        <span data-i18n="btnGitHub">Выходны код на GitHub</span>
                     </a>
                 </div>
             </div>
 
-            <!-- INTERACTIVE DEMO STAGE -->
+            <!-- INTERACTIVE DEMO STAGE (TELEGRAM CHAT SIMULATOR) -->
             <div class="stage-wrapper">
-                <div class="stage-card">
-                    <!-- Tabs -->
-                    <div class="stage-tabs-header">
-                        <button class="stage-tab-btn active" onclick="switchDemoTab('rich')">
-                            <i class="fas fa-paper-plane"></i> <span data-i18n="tabRich">Rich Message</span>
-                        </button>
-                        <button class="stage-tab-btn" onclick="switchDemoTab('balance')">
-                            <i class="fas fa-balance-scale"></i> <span data-i18n="tabBalance">Балансировщик</span>
-                        </button>
-                        <button class="stage-tab-btn" onclick="switchDemoTab('accumulator')">
-                            <i class="fas fa-layer-group"></i> <span data-i18n="tabAccumulator">Аккумулятор</span>
-                        </button>
-                        <button class="stage-tab-btn" onclick="switchDemoTab('fallback')">
-                            <i class="fas fa-shield-alt"></i> <span data-i18n="tabFallback">Фолбек</span>
-                        </button>
+                <div class="stage-card tg-chat-card">
+                    <!-- Telegram Chat Header -->
+                    <div class="tg-chat-header">
+                        <div class="tg-chat-info">
+                            <div class="tg-bot-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="tg-bot-details">
+                                <div class="tg-bot-name">
+                                    mdintgbot <i class="fas fa-check-circle tg-verified"></i>
+                                </div>
+                                <div class="tg-bot-status">bot • API 10.1 Rich Messages</div>
+                            </div>
+                        </div>
+                        <!-- Scenario Tabs -->
+                        <div class="stage-tabs-header">
+                            <button class="stage-tab-btn active" onclick="switchDemoTab('rich')">
+                                <span data-i18n="tabRich">Rich Message</span>
+                            </button>
+                            <button class="stage-tab-btn" onclick="switchDemoTab('balance')">
+                                <span data-i18n="tabBalance">Балансировщик</span>
+                            </button>
+                            <button class="stage-tab-btn" onclick="switchDemoTab('accumulator')">
+                                <span data-i18n="tabAccumulator">Аккумулятор</span>
+                            </button>
+                            <button class="stage-tab-btn" onclick="switchDemoTab('fallback')">
+                                <span data-i18n="tabFallback">Фолбек</span>
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Panels -->
-                    <div class="stage-body">
+                    <!-- Chat Body / Messages Area -->
+                    <div class="tg-chat-body">
+                        
                         <!-- Panel 1: Rich Message -->
                         <div class="demo-tab-panel active" id="panel-rich">
-                            <div class="demo-code-block">
-nlohmann::json rich_message = {
-    {"markdown", sanitized_text}
-};
-client.sendRichMessage(chat_id, rich_message);
+                            <div class="tg-chat-messages">
+                                <!-- Sent Message (Raw Markdown) -->
+                                <div class="tg-message tg-msg-out">
+                                    <div class="tg-msg-label"><i class="fas fa-arrow-up"></i> Отправленный сырой Markdown:</div>
+                                    <div class="tg-msg-bubble raw-md">
+# 🔥 Релиз v1.0
+* Поддержка **таблиц** и списка:
+1. Элемент A
+2. Элемент B
+```cpp
+void send() {
+    client.sendRichMessage(chat, payload);
+}
+```
+                                    </div>
+                                    <div class="tg-msg-meta">16:40 <i class="fas fa-check-double tg-read"></i></div>
+                                </div>
+
+                                <!-- Received Message (Telegram Rich Message) -->
+                                <div class="tg-message tg-msg-in">
+                                    <div class="tg-msg-label"><i class="fas fa-arrow-down"></i> Результат от @mdintgbot (Rich Message):</div>
+                                    <div class="tg-msg-bubble formatted-rich">
+                                        <h3 class="tg-rich-h1">🔥 Релиз v1.0</h3>
+                                        <p style="margin:4px 0;">• Поддержка <strong>таблиц</strong> и списка:</p>
+                                        <ol class="tg-rich-list" style="margin:4px 0 8px 18px; padding:0;">
+                                            <li>Элемент A</li>
+                                            <li>Элемент B</li>
+                                        </ol>
+                                        <pre class="tg-rich-code"><code><span class="kw">void</span> <span class="fn">send</span>() {
+    client.<span class="fn">sendRichMessage</span>(chat, payload);
+}</code></pre>
+                                    </div>
+                                    <div class="tg-msg-meta">16:40</div>
+                                </div>
                             </div>
-                            <p class="demo-chat-text" data-i18n="demoRichDesc">
-                                Формирование нативного JSON-пейлоада <code>{"markdown": sanitized}</code> с полной поддержкой таблиц, списков и кодовых блоков GFM.
-                            </p>
                         </div>
 
                         <!-- Panel 2: Tag Balancer -->
                         <div class="demo-tab-panel" id="panel-balance">
-                            <div class="demo-code-block">
-std::string text = "```cpp\nint main() { return 0;";
-std::string balanced = balance_markdown(text);
-// Result: "... return 0;```" <span class="demo-tag-badge">Balanced ✅</span>
+                            <div class="tg-chat-messages">
+                                <!-- Sent Message (Unclosed / Broken Tags) -->
+                                <div class="tg-message tg-msg-out">
+                                    <div class="tg-msg-label"><i class="fas fa-arrow-up"></i> Сломанный синтаксис (Незакрытые тэги):</div>
+                                    <div class="tg-msg-bubble raw-md">
+Hello world!
+```cpp
+int main() {
+    std::cout << "Unclosed code block";
+    // **Забыл закрыть жирный шрифт и код
+                                    </div>
+                                    <div class="tg-msg-meta">16:42 <i class="fas fa-check-double tg-read"></i></div>
+                                </div>
+
+                                <!-- Received Message (Balanced by C++ Engine) -->
+                                <div class="tg-message tg-msg-in">
+                                    <div class="tg-msg-label"><i class="fas fa-magic"></i> Автобалансировка C++ (`balance_markdown()`):</div>
+                                    <div class="tg-msg-bubble formatted-rich">
+                                        <span class="demo-tag-badge">Balanced & Auto-Closed ✅</span>
+                                        <p style="margin-top:6px; margin-bottom:6px;">Hello world!</p>
+                                        <pre class="tg-rich-code"><code><span class="kw">int</span> <span class="fn">main</span>() {
+    std::<span class="fn">cout</span> &lt;&lt; <span class="str">"Unclosed code block"</span>;
+    <span class="cm">// **Забыл закрыть жирный шрифт и код**</span>
+}</code></pre>
+                                    </div>
+                                    <div class="tg-msg-meta">16:42</div>
+                                </div>
                             </div>
-                            <p class="demo-chat-text" data-i18n="demoBalanceDesc">
-                                Функция <code>balance_markdown()</code> автоматически закрывает незавершенные теги <code>```</code>, <code>`</code>, <code>**</code> и <code>~~</code>, исключая ошибки <code>RICH_MESSAGE_MARKDOWN_INVALID</code>.
-                            </p>
                         </div>
 
                         <!-- Panel 3: DM Message Accumulator -->
                         <div class="demo-tab-panel" id="panel-accumulator">
-                            <div class="demo-code-block">
-// User sends 3 rapid messages within timeout:
-[Msg 1]: "Привет!" 
-[Msg 2]: "Посмотри код:"
-[Msg 3]: "```cpp\nvoid test();```"
-// Merged Payload -> Sent as 1 Rich Message ⚡
+                            <div class="tg-chat-messages">
+                                <!-- Sent Messages (3 Rapid DMs) -->
+                                <div class="tg-message tg-msg-out">
+                                    <div class="tg-msg-label"><i class="fas fa-paper-plane"></i> 3 быстрыx ЛС от пользователя подряд:</div>
+                                    <div class="tg-msg-bubble raw-md mini-burst">
+                                        <div>16:44:01 ➔ "Привет!"</div>
+                                        <div>16:44:02 ➔ "Посмотри код:"</div>
+                                        <div>16:44:03 ➔ "```cpp\nvoid process();\n```"</div>
+                                    </div>
+                                    <div class="tg-msg-meta">16:44 <i class="fas fa-check-double tg-read"></i></div>
+                                </div>
+
+                                <!-- Received Message (Merged Single Rich Message) -->
+                                <div class="tg-message tg-msg-in">
+                                    <div class="tg-msg-label"><i class="fas fa-layer-group"></i> Результат `MessageAccumulator` (1 единый пост):</div>
+                                    <div class="tg-msg-bubble formatted-rich">
+                                        <span class="demo-tag-badge" style="background:rgba(36,161,222,0.15); color:#24a1de;">Merged 3 Messages ⚡</span>
+                                        <p style="margin-top:6px; margin-bottom:6px;">Привет!<br>Посмотри код:</p>
+                                        <pre class="tg-rich-code"><code><span class="kw">void</span> <span class="fn">process</span>();</code></pre>
+                                    </div>
+                                    <div class="tg-msg-meta">16:44</div>
+                                </div>
                             </div>
-                            <p class="demo-chat-text" data-i18n="demoAccumulatorDesc">
-                                Модуль <code>MessageAccumulator</code> собирает несколько быстро отправленных сообщений пользователя в одно в пределах тайм-аута, экономя лимиты Telegram.
-                            </p>
                         </div>
 
                         <!-- Panel 4: 3-Tier Fallback -->
                         <div class="demo-tab-panel" id="panel-fallback">
-                            <div class="demo-code-block">
-1. Rich Message API 10.1 ➔ [OK]
-2. Fallback: MarkdownV2 AST Parser ➔ [Safely Escaped]
-3. Fallback: Plain Text Sanitized ➔ [Guaranteed Delivery]
+                            <div class="tg-chat-messages">
+                                <!-- Fallback Pipeline Visualizer -->
+                                <div class="tg-message tg-msg-in" style="max-width:100%;">
+                                    <div class="tg-msg-label"><i class="fas fa-shield-alt"></i> Каскадная система доставки:</div>
+                                    <div class="tg-msg-bubble formatted-rich fallback-pipeline-box">
+                                        <div class="pipeline-step step-ok">
+                                            <span class="p-num">1</span>
+                                            <div class="p-info">
+                                                <strong>Telegram Bot API 10.1 Rich Message</strong>
+                                                <span>Нативный JSON-пейлоад с полным GFM</span>
+                                            </div>
+                                            <span class="p-status">PRIMARY 🟢</span>
+                                        </div>
+                                        <div class="pipeline-step step-fallback">
+                                            <span class="p-num">2</span>
+                                            <div class="p-info">
+                                                <strong>MarkdownV2 AST Parser</strong>
+                                                <span>Экранирование спецсимволов и разбор сущностей</span>
+                                            </div>
+                                            <span class="p-status">FALLBACK 1 🟡</span>
+                                        </div>
+                                        <div class="pipeline-step step-plain">
+                                            <span class="p-num">3</span>
+                                            <div class="p-info">
+                                                <strong>Plain Text Sanitized</strong>
+                                                <span>Чистый санированный текст без форматирования</span>
+                                            </div>
+                                            <span class="p-status">FALLBACK 2 🟠</span>
+                                        </div>
+                                    </div>
+                                    <div class="tg-msg-meta">16:45</div>
+                                </div>
                             </div>
-                            <p class="demo-chat-text" data-i18n="demoFallbackDesc">
-                                Если Rich Message отклоняется сервером Telegram, движок последовательно выполняет фолбек на парсер <code>MarkdownV2 AST</code>, а затем на чистый текст.
-                            </p>
                         </div>
                     </div>
 
-                    <!-- Footer -->
-                    <div class="stage-footer">
-                        <span data-i18n="demoStatus">Статус: активен 🟢</span>
-                        <span data-i18n="demoSpeed">Задержка: &lt; 1 мс</span>
+                    <!-- Chat Mock Input Footer -->
+                    <div class="tg-chat-input-bar">
+                        <i class="fas fa-paperclip tg-input-icon"></i>
+                        <div class="tg-input-placeholder">Написать сообщение в Markdown...</div>
+                        <button class="tg-send-btn" title="Отправить"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
@@ -271,20 +371,20 @@ std::string balanced = balance_markdown(text);
         <!-- AUTHOR PROFILE SECTION -->
         <section id="author" class="section">
             <div class="section-header">
-                <span class="section-tag" data-i18n="authorTag">Создатель</span>
-                <h2 class="section-title" data-i18n="authorTitle">Об авторе проекта</h2>
+                <span class="section-tag" data-i18n="authorTag">Стваральнік</span>
+                <h2 class="section-title" data-i18n="authorTitle">Пра аўтара</h2>
             </div>
 
             <div class="author-card">
                 <img src="https://technocat.cc/avatar.png" alt="Nikitos" class="author-avatar" onerror="this.src='https://github.com/techno-c-a-t.png'">
                 <div class="author-details">
-                    <h3 data-i18n="authorName">Nikitos (@techno_c_a_t)</h3>
+                    <h3 data-i18n="authorName">Nikitos</h3>
                     <p data-i18n="authorBio">
-                        Студент ПМИ, создатель intgmdbot, NSLDAI, SwipeBeat и других решений на C++, Python, Linux и IoT.
+                        Распрацоўшчык праекта intgmdbot. Аматар IT і DIY.
                     </p>
                     <a href="https://technocat.cc" target="_blank" class="btn btn-primary">
                         <i class="fas fa-external-link-alt"></i>
-                        <span data-i18n="authorBtn">Перейти в Портфолио</span>
+                        <span data-i18n="authorBtn">Пра аўтара ↗</span>
                     </a>
                 </div>
             </div>
