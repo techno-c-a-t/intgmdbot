@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="be">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="docTitle">intgmdbot — C++20 Telegram GFM Engine</title>
+    <meta name="description" content="Высакапрадукцыйны тэлеграм-бот на C++20 з падтрымкай Telegram Bot API 10.1 Rich Messages, балансіроўкай GFM тэгаў і 3-узроўневым фолбекам.">
+    <meta name="keywords" content="intgmdbot, Telegram Bot API 10.1, C++20, GFM Markdown, Telegram Rich Message, nlohmann_json, cpp-httplib">
+    <meta name="author" content="technocat">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="intgmdbot — C++20 Telegram GFM Engine">
+    <meta property="og:description" content="High-performance C++20 Telegram Bot engine powering GFM Rich Messages, tag balancing & message accumulation.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <link rel="stylesheet" href="web/style.css">
+</head>
+
+<body data-theme="dark" data-lang="be">
+
+    <!-- Ambient Background Glow & Grid Pattern -->
+    <div class="ambient-glow"></div>
+    <div class="grid-pattern"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo-area">
+                <div class="app-icon-box">
+                    <i class="fas fa-terminal"></i>
+                </div>
+                <span>intg<span class="accent-text">mdbot</span></span>
+            </a>
+
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#features" data-i18n="navFeatures">Магчымасці</a></li>
+                    <li><a href="#architecture" data-i18n="navArchitecture">Архітэктура</a></li>
+                    <li><a href="#author" data-i18n="navAuthor">Пра аўтара</a></li>
+                </ul>
+
+                <div class="nav-controls">
+                    <!-- Theme Switcher -->
+                    <button class="theme-toggle-btn" id="themeBtn" onclick="toggleTheme()" title="Переключить тему">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+
+                    <!-- Language Dropdown (BE / EN / RU) -->
+                    <div class="lang-dropdown">
+                        <button class="lang-btn" id="langBtn" onclick="toggleLangMenu(event)">
+                            <span id="currentLangLabel">🇧🇾 BE</span>
+                            <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="lang-menu" id="langMenu">
+                            <div class="lang-option" onclick="setLanguage('be')">🇧🇾 Беларуская</div>
+                            <div class="lang-option" onclick="setLanguage('en')">🇬🇧 English</div>
+                            <div class="lang-option" onclick="setLanguage('ru')">🇷🇺 Русский</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://github.com/techno-c-a-t/intgmdbot" target="_blank" rel="noopener" class="btn btn-github">
+                    <i class="fab fa-github"></i>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    <span data-i18n="heroBadge">High-Performance · C++20 · Bot API 10.1</span>
+                </div>
+                <h1 class="hero-title" data-i18n="heroTitle">
+                    intgmdbot — GFM Telegram Engine
+                </h1>
+                <p class="hero-subtitle" data-i18n="heroSubtitle">
+                    Высокопроизводительный телеграм-бот на C++20 с поддержкой Telegram Bot API 10.1 Rich Messages, балансировкой GFM тегов, аккумулятором личных сообщений и 3-уровневой системой фолбеков.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/techno-c-a-t/intgmdbot" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i>
+                        <span data-i18n="btnGitHub">Исходный код на GitHub</span>
+                    </a>
+                    <a href="#architecture" class="btn btn-secondary">
+                        <i class="fas fa-code"></i>
+                        <span data-i18n="btnDocs">Архитектура C++</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE DEMO STAGE -->
+            <div class="stage-wrapper">
+                <div class="stage-card">
+                    <!-- Tabs -->
+                    <div class="stage-tabs-header">
+                        <button class="stage-tab-btn active" onclick="switchDemoTab('rich')">
+                            <i class="fas fa-paper-plane"></i> <span data-i18n="tabRich">Rich Message</span>
+                        </button>
+                        <button class="stage-tab-btn" onclick="switchDemoTab('balance')">
+                            <i class="fas fa-balance-scale"></i> <span data-i18n="tabBalance">Балансировщик</span>
+                        </button>
+                        <button class="stage-tab-btn" onclick="switchDemoTab('accumulator')">
+                            <i class="fas fa-layer-group"></i> <span data-i18n="tabAccumulator">Аккумулятор</span>
+                        </button>
+                        <button class="stage-tab-btn" onclick="switchDemoTab('fallback')">
+                            <i class="fas fa-shield-alt"></i> <span data-i18n="tabFallback">Фолбек</span>
+                        </button>
+                    </div>
+
+                    <!-- Panels -->
+                    <div class="stage-body">
+                        <!-- Panel 1: Rich Message -->
+                        <div class="demo-tab-panel active" id="panel-rich">
+                            <div class="demo-code-block">
+nlohmann::json rich_message = {
+    {"markdown", sanitized_text}
+};
+client.sendRichMessage(chat_id, rich_message);
+                            </div>
+                            <p class="demo-chat-text" data-i18n="demoRichDesc">
+                                Формирование нативного JSON-пейлоада <code>{"markdown": sanitized}</code> с полной поддержкой таблиц, списков и кодовых блоков GFM.
+                            </p>
+                        </div>
+
+                        <!-- Panel 2: Tag Balancer -->
+                        <div class="demo-tab-panel" id="panel-balance">
+                            <div class="demo-code-block">
+std::string text = "```cpp\nint main() { return 0;";
+std::string balanced = balance_markdown(text);
+// Result: "... return 0;```" <span class="demo-tag-badge">Balanced ✅</span>
+                            </div>
+                            <p class="demo-chat-text" data-i18n="demoBalanceDesc">
+                                Функция <code>balance_markdown()</code> автоматически закрывает незавершенные теги <code>```</code>, <code>`</code>, <code>**</code> и <code>~~</code>, исключая ошибки <code>RICH_MESSAGE_MARKDOWN_INVALID</code>.
+                            </p>
+                        </div>
+
+                        <!-- Panel 3: DM Message Accumulator -->
+                        <div class="demo-tab-panel" id="panel-accumulator">
+                            <div class="demo-code-block">
+// User sends 3 rapid messages within timeout:
+[Msg 1]: "Привет!" 
+[Msg 2]: "Посмотри код:"
+[Msg 3]: "```cpp\nvoid test();```"
+// Merged Payload -> Sent as 1 Rich Message ⚡
+                            </div>
+                            <p class="demo-chat-text" data-i18n="demoAccumulatorDesc">
+                                Модуль <code>MessageAccumulator</code> собирает несколько быстро отправленных сообщений пользователя в одно в пределах тайм-аута, экономя лимиты Telegram.
+                            </p>
+                        </div>
+
+                        <!-- Panel 4: 3-Tier Fallback -->
+                        <div class="demo-tab-panel" id="panel-fallback">
+                            <div class="demo-code-block">
+1. Rich Message API 10.1 ➔ [OK]
+2. Fallback: MarkdownV2 AST Parser ➔ [Safely Escaped]
+3. Fallback: Plain Text Sanitized ➔ [Guaranteed Delivery]
+                            </div>
+                            <p class="demo-chat-text" data-i18n="demoFallbackDesc">
+                                Если Rich Message отклоняется сервером Telegram, движок последовательно выполняет фолбек на парсер <code>MarkdownV2 AST</code>, а затем на чистый текст.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="stage-footer">
+                        <span data-i18n="demoStatus">Статус: активен 🟢</span>
+                        <span data-i18n="demoSpeed">Задержка: &lt; 1 мс</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section id="features" class="section">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="featuresTag">Возможности</span>
+                <h2 class="section-title" data-i18n="featuresTitle">Почему intgmdbot?</h2>
+            </div>
+
+            <div class="features-grid">
+                <!-- 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3 data-i18n="fTitle1">Bot API 10.1 Rich Messages</h3>
+                    <p data-i18n="fDesc1">Прямая отправка нативного GFM-размеченного текста без ограничений устаревшего формата MarkdownV2.</p>
+                </div>
+                <!-- 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-balance-scale"></i></div>
+                    <h3 data-i18n="fTitle2">Авто-балансировка тегов</h3>
+                    <p data-i18n="fDesc2">Интеллектуальный алгоритм закрытия парных синтаксических конструкций исключает падения из-за битого Markdown.</p>
+                </div>
+                <!-- 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-broom"></i></div>
+                    <h3 data-i18n="fTitle3">Санитайзер NBSP</h3>
+                    <p data-i18n="fDesc3">Автоматическая замена неразрывных пробелов (0xC2 0xA0) на обычные для корректного отображения списков GFM.</p>
+                </div>
+                <!-- 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3 data-i18n="fTitle4">Аккумулятор сообщений</h3>
+                    <p data-i18n="fDesc4">Буферизация потока коротких сообщений от пользователя и их объединение в один красивый форматированный пост.</p>
+                </div>
+                <!-- 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 data-i18n="fTitle5">3-уровневая надежность</h3>
+                    <p data-i18n="fDesc5">Каскадная отправка: Telegram Rich Message → MarkdownV2 AST Parser → Plain Text. Сообщение гарантированно дойдет.</p>
+                </div>
+                <!-- 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-microchip"></i></div>
+                    <h3 data-i18n="fTitle6">C++20 Runtime</h3>
+                    <p data-i18n="fDesc6">Сборка на CMake 3.20+, OpenSSL, cpp-httplib и nlohmann_json. Минимальное потребление RAM и мгновенный отклик.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARCHITECTURE SECTION -->
+        <section id="architecture" class="section">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="archTag">Архитектура</span>
+                <h2 class="section-title" data-i18n="archTitle">Устройство движка C++20</h2>
+            </div>
+
+            <div class="arch-grid">
+                <div class="arch-card">
+                    <h3><i class="fas fa-stream"></i> <span data-i18n="archP1Title">Message Accumulator Pipeline</span></h3>
+                    <p data-i18n="archP1Desc">Асинхронная очередь сообщений с фоновым потоком таймера. Объединяет последовательные сообщения от одного пользователя в единый буфер перед отправкой.</p>
+                </div>
+
+                <div class="arch-card">
+                    <h3><i class="fas fa-sitemap"></i> <span data-i18n="archP2Title">AST-Парсер MarkdownV2</span></h3>
+                    <p data-i18n="archP2Desc">Собственный AST парсер для транспиляции GFM в безопасные escape-последовательности MarkdownV2 на случай недоступности Rich Message API.</p>
+                </div>
+
+                <div class="arch-card">
+                    <h3><i class="fas fa-file-alt"></i> <span data-i18n="archP3Title">Ротируемое логирование</span></h3>
+                    <p data-i18n="archP3Desc">Модуль logger.cpp ведает записью события с уровнями INFO, WARNING, ERROR и CRITICAL в файл bot.log.</p>
+                </div>
+
+                <div class="arch-card">
+                    <h3><i class="fas fa-cog"></i> <span data-i18n="archP4Title">Конфигурируемый JSON</span></h3>
+                    <p data-i18n="archP4Desc">Гибкая настройка через config.json: таймауты аккумуляции, токены и режимы парсинга без пересборки бинарного файла.</p>
+                </div>
+            </div>
+
+            <div class="tags-row">
+                <span class="tag-pill">C++20</span>
+                <span class="tag-pill">CMake 3.20+</span>
+                <span class="tag-pill">Telegram Bot API 10.1</span>
+                <span class="tag-pill">nlohmann_json</span>
+                <span class="tag-pill">cpp-httplib</span>
+                <span class="tag-pill">OpenSSL SSL/Crypto</span>
+                <span class="tag-pill">std::threads</span>
+                <span class="tag-pill">Docker & Builder</span>
+            </div>
+        </section>
+
+        <!-- AUTHOR PROFILE SECTION -->
+        <section id="author" class="section">
+            <div class="section-header">
+                <span class="section-tag" data-i18n="authorTag">Создатель</span>
+                <h2 class="section-title" data-i18n="authorTitle">Об авторе проекта</h2>
+            </div>
+
+            <div class="author-card">
+                <img src="https://technocat.cc/avatar.png" alt="Nikitos" class="author-avatar" onerror="this.src='https://github.com/techno-c-a-t.png'">
+                <div class="author-details">
+                    <h3 data-i18n="authorName">Nikitos (@techno_c_a_t)</h3>
+                    <p data-i18n="authorBio">
+                        Студент ПМИ, создатель intgmdbot, NSLDAI, SwipeBeat и других решений на C++, Python, Linux и IoT.
+                    </p>
+                    <a href="https://technocat.cc" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span data-i18n="authorBtn">Перейти в Портфолио</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-copy">
+                © 2026 intgmdbot · Created by <a href="https://technocat.cc" target="_blank" style="color:var(--accent-color); font-weight:600;">@techno_c_a_t</a>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/techno-c-a-t/intgmdbot" target="_blank">GitHub</a>
+                <a href="https://technocat.cc" target="_blank">Portfolio</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="web/script.js"></script>
+</body>
+
+</html>
